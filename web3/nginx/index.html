@@ -4,6 +4,51 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Image Upload and Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    #uploadButton {
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #imageContainer {
+      margin-top: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    img {
+      max-width: 200px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
   <h1>Lab6-20021323-TranMinhDuong</h1>
@@ -27,23 +72,43 @@
         imageContainer.innerHTML = ''; // Clear existing images
 
         const table = document.createElement('table');
+        const headerRow = table.insertRow();
+
+        // Header for ID column
+        const idHeader = document.createElement('th');
+        idHeader.textContent = 'ID';
+        headerRow.appendChild(idHeader);
+
+        // Header for Caption column
+        const captionHeader = document.createElement('th');
+        captionHeader.textContent = 'Caption';
+        headerRow.appendChild(captionHeader);
+
+        // Header for Image column
+        const imgHeader = document.createElement('th');
+        imgHeader.textContent = 'Image';
+        headerRow.appendChild(imgHeader);
 
         images.forEach(image => {
           const row = table.insertRow();
 
+          // ID cell
           const idCell = row.insertCell();
           idCell.textContent = image.id;
 
+          // Caption cell
+          const captionCell = row.insertCell();
+          captionCell.textContent = image.caption;
+
+          // Image cell
           const imgCell = row.insertCell();
           const imgElement = document.createElement('img');
           imgElement.src = image.url;
-          imgElement.style.maxWidth = '200px';
-          imgElement.style.marginRight = '10px';
-          imgElement.style.marginBottom = '10px';
+          imgElement.alt = 'Image';
           imgCell.appendChild(imgElement);
         });
 
-        // Đưa bảng vào container
+        // Append table to container
         imageContainer.appendChild(table);
       } catch (error) {
         console.error('Error:', error);

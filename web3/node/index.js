@@ -44,7 +44,7 @@ async function executeQuery(sql, params) {
 //   const caption = req.body.caption;
 app.post('/upload', upload, async (req, res) => {
   const files = req.files;
-  const imageFile = files['image'][0];
+  const file = files['image'][0];
   const caption = req.body['caption'];
   // Upload file to Google Cloud Storage
   try {

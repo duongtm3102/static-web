@@ -4,12 +4,51 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Image Upload</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    #uploadForm {
+      max-width: 400px;
+      margin-bottom: 20px;
+    }
+
+    #imageInput, #captionInput, #submitButton, #backButton {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+
+    #submitButton {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #backButton {
+      background-color: #6c757d;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
   <h1>Upload Image</h1>
   <form id="uploadForm" enctype="multipart/form-data">
     <input type="file" id="imageInput" accept="image/*" required>
-    <button type="submit">Upload</button>
+    <input type="text" id="captionInput" placeholder="Enter caption..." required>
+    <button type="submit" id="submitButton">Upload</button>
   </form>
 
   <!-- Nút "Back" để quay lại trang chính -->
@@ -26,7 +65,8 @@
 
       const formData = new FormData();
       formData.append('image', document.getElementById('imageInput').files[0]);
-
+      formData.append('caption', document.getElementById('captionInput').value);
+      console.log(formData);
       try {
         const response = await fetch('http://35.212.136.71:3000/upload', {
           method: 'POST',
