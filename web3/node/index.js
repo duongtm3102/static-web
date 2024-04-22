@@ -20,8 +20,8 @@ const bucketName = process.env.YOUR_GCS_BUCKET_NAME;
 const bucket = storage.bucket(bucketName);
 
 // Multer configuration for file upload
-const upload = multer({ dest: 'uploads/' });
-
+//const upload = multer({ dest: 'uploads/' });
+const upload = multer({ dest: 'uploads/' }).fields([{ name: 'image' }, { name: 'caption' }]);
 // MySQL database configuration
 const dbConfig = {
   host: process.env.YOUR_CLOUD_SQL_IP_ADDRESS,
@@ -39,9 +39,13 @@ async function executeQuery(sql, params) {
 }
 
 // Upload endpoint
-app.post('/upload', upload.single('image'), async (req, res) => {
-  const file = req.file;
-  const caption = req.body.caption;
+// app.post('/upload', upload.single('image'), async (req, res) => {
+//   const file = req.file;
+//   const caption = req.body.caption;
+app.post('/upload', upload, async (req, res) => {
+  const files = req.files;
+  const imageFile = files['image'][0];
+  const caption = req.body['caption'];
   // Upload file to Google Cloud Storage
   try {
     await bucket.upload(file.path, {
