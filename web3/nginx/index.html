@@ -6,38 +6,16 @@
   <title>Image Upload and Management</title>
 </head>
 <body>
-  <h1>Upload Image</h1>
-  <form id="uploadForm" enctype="multipart/form-data">
-    <input type="file" id="imageInput" accept="image/*" required>
-    <button type="submit">Upload</button>
-  </form>
-
+  <h1>Lab6-20021323-TranMinhDuong</h1>
+  <button id="uploadButton">Upload Image</button>
   <hr>
 
-  <h1>Uploaded Images</h1>
+  <h1>All Images</h1>
   <div id="imageContainer"></div>
 
   <script>
-    document.getElementById('uploadForm').addEventListener('submit', async (event) => {
-      event.preventDefault();
-
-      const formData = new FormData();
-      formData.append('image', document.getElementById('imageInput').files[0]);
-
-      try {
-        const response = await fetch('http://35.212.136.71:3000/upload', {
-          method: 'POST',
-          body: formData
-        });
-
-        const result = await response.text();
-        alert(result); // Show success message
-        document.getElementById('imageInput').value = ''; // Clear input field
-        fetchImages(); // Refresh image gallery
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to upload image.');
-      }
+    document.getElementById('uploadButton').addEventListener('click', () => {
+      window.location.href = 'upload.html';
     });
 
     async function fetchImages() {
