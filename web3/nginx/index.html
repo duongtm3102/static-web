@@ -25,7 +25,7 @@
       formData.append('image', document.getElementById('imageInput').files[0]);
 
       try {
-        const response = await fetch('http://192.168.10.7:3000/upload', {
+        const response = await fetch('http://35.212.136.71:3000/upload', {
           method: 'POST',
           body: formData
         });
@@ -42,20 +42,31 @@
 
     async function fetchImages() {
       try {
-        const response = await fetch('http://192.168.10.7:3000/images');
+        const response = await fetch('http://35.212.136.71:3000/images');
         const images = await response.json();
 
         const imageContainer = document.getElementById('imageContainer');
         imageContainer.innerHTML = ''; // Clear existing images
 
+        const table = document.createElement('table');
+
         images.forEach(image => {
+          const row = table.insertRow();
+
+          const idCell = row.insertCell();
+          idCell.textContent = image.id;
+
+          const imgCell = row.insertCell();
           const imgElement = document.createElement('img');
           imgElement.src = image.url;
           imgElement.style.maxWidth = '200px';
           imgElement.style.marginRight = '10px';
           imgElement.style.marginBottom = '10px';
-          imageContainer.appendChild(imgElement);
+          imgCell.appendChild(imgElement);
         });
+
+        // Đưa bảng vào container
+        imageContainer.appendChild(table);
       } catch (error) {
         console.error('Error:', error);
         alert('Failed to fetch images.');
