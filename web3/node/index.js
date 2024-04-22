@@ -41,7 +41,7 @@ async function executeQuery(sql, params) {
 // Upload endpoint
 app.post('/upload', upload.single('image'), async (req, res) => {
   const file = req.file;
-
+  const caption = req.body.caption;
   // Upload file to Google Cloud Storage
   try {
     await bucket.upload(file.path, {
@@ -51,8 +51,8 @@ app.post('/upload', upload.single('image'), async (req, res) => {
     const imageUrl = `https://storage.googleapis.com/${bucketName}/${file.originalname}`;
 
     // Save file info to MySQL database
-    const sql = 'INSERT INTO images (url) VALUES (?)';
-    await executeQuery(sql, [imageUrl]);
+    const sql = 'INSERT INTO images (url, caption) VALUES (?, ?)';
+    await executeQuery(sql, [imageUrl, caption]);
 
     res.send('File uploaded successfully!');
   } catch (err) {
